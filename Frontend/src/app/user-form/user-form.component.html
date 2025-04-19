@@ -1,0 +1,93 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-container">
+     <h1>User Information Form</h1>
+
+     <label>Full Name</label>
+     <input type="text" formControlName="fullName" />
+     <div class="error" *ngIf="userForm.get('fullName')?.hasError('required')">Name is required</div>
+     <div class="error" *ngIf="userForm.get('fullName')?.hasError('minlength')">Minimum 2 characters</div>
+
+     <div *ngIf="predictedAge" class="age-prediction">Predicted Age: {{ predictedAge }}</div>
+
+     <label>Email</label>
+     <input type="email" formControlName="email" />
+     <div class="error" *ngIf="userForm.get('email')?.hasError('required')">Email is required</div>
+     <div class="error" *ngIf="userForm.get('email')?.hasError('email')">Invalid email</div>
+
+     <label>Phone</label>
+     <input type="tel" formControlName="phone" />
+     <div class="error" *ngIf="userForm.get('phone')?.hasError('required')">Phone is required</div>
+     <div class="error" *ngIf="userForm.get('phone')?.hasError('pattern')">Must be 10 digits</div>
+
+     <label>Date of Birth</label>
+     <input type="date" formControlName="dob" />
+     <div class="error" *ngIf="userForm.get('dob')?.hasError('required')">DOB is required</div>
+     <div class="error" *ngIf="userForm.get('dob')?.hasError('underAge')">Must be 18+</div>
+
+     <label>Gender</label>
+     <select formControlName="gender">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+     </select>
+     <div class="error" *ngIf="userForm.get('gender')?.hasError('required')">Gender is required</div>
+
+     <label>Address Line 1</label>
+     <input type="text" formControlName="address1" />
+     <div class="error" *ngIf="userForm.get('address1')?.hasError('required')">Address is required</div>
+
+     <label>Address Line 2 (Optional)</label>
+     <input type="text" formControlName="address2" />
+
+     <label>Country</label>
+     <select formControlName="country">
+          <option value="">Select Country</option>
+          <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+     </select>
+     <div class="error" *ngIf="userForm.get('country')?.hasError('required')">Country is required</div>
+
+     <label>State/Province</label>
+     <select formControlName="state">
+          <option value="">Select State</option>
+          <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+     </select>
+     <div class="error" *ngIf="userForm.get('state')?.hasError('required')">State is required</div>
+
+     <label>City</label>
+     <select formControlName="city">
+          <option value="">Select City</option>
+          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+     </select>
+     <div class="error" *ngIf="userForm.get('city')?.hasError('required')">City is required</div>
+
+     <label>Zip Code</label>
+     <input type="text" formControlName="zipCode" />
+     <div class="error" *ngIf="userForm.get('zipCode')?.hasError('required')">Zip Code is required</div>
+     <div class="error" *ngIf="userForm.get('zipCode')?.hasError('pattern')">5-6 digits required</div>
+
+     <label>Occupation</label>
+     <select formControlName="occupation">
+          <option value="">Select Occupation</option>
+          <option *ngFor="let job of occupations" [value]="job">{{ job }}</option>
+     </select>
+     <div class="error" *ngIf="userForm.get('occupation')?.hasError('required')">Occupation is required</div>
+
+     <label>Annual Income (Optional)</label>
+     <input type="number" formControlName="income" />
+     <div class="error" *ngIf="userForm.get('income')?.hasError('min')">Must be positive</div>
+
+     <div class="signature-section">
+          <h3>Signature</h3>
+          <signature-pad #pad [options]="{ penColor: 'black', backgroundColor: 'white' }"
+               (drawStart)="onSignatureClear()" (drawEnd)="onSignatureSave()"></signature-pad>
+
+          <button type="button" class="clear-btn" (click)="clearSignature()">Clear Signature</button>
+
+          <div class="error"
+               *ngIf="userForm.get('signature')?.hasError('required') && userForm.get('signature')?.touched">
+               Signature is required
+          </div>
+     </div>
+
+     <button type="submit" [disabled]="userForm.invalid">Generate PDF</button>
+</form>

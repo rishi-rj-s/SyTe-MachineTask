@@ -1,0 +1,128 @@
+.form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  grid-column: span 2;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #3f51b5;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  display: block;
+  color: #333;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  grid-column: span 2;
+}
+
+.age-prediction {
+  grid-column: span 2;
+  color: #3f51b5;
+  font-style: italic;
+  margin-top: -0.5rem;
+}
+
+.signature-section {
+  grid-column: span 2;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.signature-section h3 {
+  margin-top: 0;
+}
+
+signature-pad {
+  border: 1px dashed #999;
+  width: 100% !important;
+  height: 150px;
+  display: block;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  grid-column: span 2;
+  padding: 0.75rem;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #303f9f;
+}
+
+.clear-btn {
+  margin-top: 0.5rem;
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.clear-btn:hover {
+  background-color: #c62828;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    grid-template-columns: 1fr;
+  }
+
+  .error {
+    grid-column: span 1;
+  }
+
+  .age-prediction,
+  .signature-section,
+  button[type="submit"] {
+    grid-column: span 1;
+  }
+}
