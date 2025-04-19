@@ -108,17 +108,39 @@ export class UserFormComponent implements OnInit {
     this.cities = cityMap[state] || [];
   }
 
-  onSubmit() : void {
-    if(this.userForm.valid){
+  onSubmit(): void {
+    if (this.userForm.valid) {
       const formData = this.userForm.value;
+      formData.age = this.predictedAge;
       console.log('Form submitted:', formData);
+
+      this.http.post('http://localhost:3000/api/user', formData, {
+        responseType: 'blob'
+      }).subscribe({
+        next: (pdfBlob: Blob) => {
+          // PDF download logic
+          const url = window.URL.createObjectURL(pdfBlob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'user_details.pdf';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+
+          console.log('PDF downloaded successfully');
+        },
+        error: (err) => {
+          console.error('Form submission error:', err);
+        }
+      });
     } else {
       this.userForm.markAllAsTouched();
+      console.warn('Form invalid - please complete all required fields');
     }
   }
 
   onSignatureSave(): void {
-    console.log("Hi")
     if (this.signaturePad?.isEmpty()) {
       this.userForm.get('signature')?.setValue('');
     } else {
